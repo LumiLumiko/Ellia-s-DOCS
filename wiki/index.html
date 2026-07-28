@@ -353,7 +353,48 @@ section::after{content:'';display:block;height:34px;margin:46px auto 0;max-width
   .dect th,.dect td{padding:6px 8px}
   .dec-scroll{overflow-x:visible}
 }
-</style>
+
+/* ── редкие мерцающие звёзды на пустых полях ────────────────────────────────
+   Включаются только там, где рядом с колонкой контента реально есть чёрное
+   поле (от 1100px). На телефоне и планшете текст занимает всю ширину, и
+   звёзды под ним только мешали бы читать, поэтому там их нет вовсе.
+   Слой фиксированный и не ловит клики; при системной просьбе «меньше
+   движения» мерцание выключается.                                          */
+@media (min-width:1100px){
+  .wrap,header,footer{position:relative;z-index:1}
+  body::before,body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  }
+  body::before{
+    background-image:
+      radial-gradient(2.2px 2.2px at 4% 11%,rgba(226,212,255,.95),transparent 62%),
+      radial-gradient(1.8px 1.8px at 11% 34%,rgba(255,214,242,.8),transparent 62%),
+      radial-gradient(1.6px 1.6px at 6% 57%,rgba(200,216,255,.75),transparent 62%),
+      radial-gradient(2px 2px at 14% 79%,rgba(236,222,255,.85),transparent 62%),
+      radial-gradient(2.2px 2.2px at 95% 8%,rgba(226,212,255,.9),transparent 62%),
+      radial-gradient(1.7px 1.7px at 89% 29%,rgba(255,210,238,.8),transparent 62%),
+      radial-gradient(2px 2px at 97% 54%,rgba(210,214,255,.85),transparent 62%),
+      radial-gradient(1.6px 1.6px at 90% 88%,rgba(240,226,255,.75),transparent 62%);
+    background-size:100% 1500px;
+    animation:wikiStarsA 7.5s ease-in-out infinite;
+  }
+  body::after{
+    background-image:
+      radial-gradient(1.5px 1.5px at 8% 22%,rgba(236,222,255,.8),transparent 62%),
+      radial-gradient(2.4px 2.4px at 2% 68%,rgba(255,228,248,.9),transparent 62%),
+      radial-gradient(1.4px 1.4px at 16% 92%,rgba(214,226,255,.7),transparent 62%),
+      radial-gradient(1.5px 1.5px at 93% 18%,rgba(226,232,255,.75),transparent 62%),
+      radial-gradient(2.4px 2.4px at 99% 41%,rgba(244,222,255,.9),transparent 62%),
+      radial-gradient(1.5px 1.5px at 86% 71%,rgba(255,222,244,.7),transparent 62%);
+    background-size:100% 1180px;
+    animation:wikiStarsB 11s ease-in-out infinite;
+  }
+}
+@keyframes wikiStarsA{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes wikiStarsB{0%,100%{opacity:.95}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){
+  body::before,body::after{animation:none;opacity:.7}
+}</style>
 <div id="readbar" aria-hidden="true"></div>
 <button id="toTop" type="button" aria-label="Наверх" title="Наверх">▲</button>
 <button id="langBtn" aria-label="Switch language">RU · EN</button>
